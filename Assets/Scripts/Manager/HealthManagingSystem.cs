@@ -81,12 +81,12 @@ public class HealthManagingSystem : MonoBehaviour
 
         if (healthText != null)
         {
-            healthText.text = "Health: " + health.ToString();
+            healthText.text = health.ToString();
         }
 
         if (hungerText != null)
         {
-            hungerText.text = "Hunger: " + hunger.ToString("F2");
+            hungerText.text = hunger.ToString("F2");
         }
     }
 

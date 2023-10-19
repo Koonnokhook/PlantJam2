@@ -5,7 +5,6 @@ using Random = UnityEngine.Random;
 using UnityEngine.UI;
 using static PlantType;
 
-
 public enum BattleState
 {
     START,
@@ -15,8 +14,6 @@ public enum BattleState
     LOST,
 }
 
-
-
 public class BattleSystem : MonoBehaviour
 {
     public GameObject playerPrefab;
@@ -24,6 +21,8 @@ public class BattleSystem : MonoBehaviour
     public Transform playerBattleStation;
     public Transform enemyBattleStation;
     public HealthManagingSystem healthManager;
+    private PlantVariety selectedVariety;
+    private GameObject plantInPot;
 
     Unit playerUnit;
     Unit enemyUnit;
@@ -34,7 +33,6 @@ public class BattleSystem : MonoBehaviour
 
     private int playerHPInBattle; // Separate HP for the battle
     private int defeatPenalty = 10;
-    private PlantVariety selectedVariety; // Store the selected variety
 
     void Start()
     {
@@ -94,42 +92,13 @@ public class BattleSystem : MonoBehaviour
         {
             int normalDamage = UnityEngine.Random.Range(enemyUnit.minDamage, enemyUnit.maxDamage + 1);
 
-            float damageMultiplier = 1.2f;  
-
+            float damageMultiplier = 1.2f;
 
             int modifiedDamage = (int)(normalDamage * damageMultiplier);
 
-
             playerUnit.TakeDamage(modifiedDamage);
         }
-
-        else if (selectedVariety.skillType == PlantAbility.PlantSkillType.Status)
-        {
-            if (selectedVariety.StatusEffect == PlantAbility.PlantStatusEffect.Poison)
-            {
-
-                int poisonAmount = 5; 
-                int poisonDuration = 3;  
-
-               //PlantSkill singleton
-               // PlantSkill.ApplyPoisonEffect(poisonDuration, poisonAmount);
-            }
-
-            if (selectedVariety.StatusEffect == PlantAbility.PlantStatusEffect.Onfired)
-            {
-                int fireDamage = 10;  
-                int fireDuration = 3;
-
-                // PlantSkill.ApplyOnFireEffect(fireDuration, fireDamage);
-            }
-
-            if (selectedVariety.StatusEffect == PlantAbility.PlantStatusEffect.Paralyze)
-            {
-                dialogueText.text = "You are paralyzed and can't attack!";
-                state = BattleState.ENEMYTURN;
-                StartCoroutine(EnemyTurn());
-            }
-        }
+        // Other logic for skill types here
 
         if (isDead)
         {
@@ -148,14 +117,16 @@ public class BattleSystem : MonoBehaviour
         if (state == BattleState.WON)
         {
             dialogueText.text = "You won the battle!";
-
-            InventoryManager.AddPlantToInventory(selectedVariety);
-
+            // Add the selected variety to the inventory
+            InventoryManager inventoryManager = FindObjectOfType<InventoryManager>();
+            if (inventoryManager != null)
+            {
+                inventoryManager.AddPlantToInventory(selectedVariety, inventoryManager);
+            }
             // Replace 'plantInPot' with the actual reference to the plant GameObject
             Destroy(plantInPot);
             Debug.Log("Code needed");
         }
-
         else if (state == BattleState.LOST)
         {
             dialogueText.text = "You were defeated.";

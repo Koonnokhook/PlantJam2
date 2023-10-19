@@ -11,6 +11,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public string itemName;
     public Sprite itemIcon;
 
+
     [HideInInspector] public Transform parentAfterDrag;
 
     public void InitializeItem(ItemData newItem) 

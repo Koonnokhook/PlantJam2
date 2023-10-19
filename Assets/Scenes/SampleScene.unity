@@ -7274,7 +7274,6 @@ GameObject:
   - component: {fileID: 451340559}
   - component: {fileID: 451340558}
   - component: {fileID: 451340557}
-  - component: {fileID: 451340556}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -7282,91 +7281,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &451340556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 451340555}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa95717e5e874794a96959266c2f4110, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plantVarieties:
-  - varietyName: 
-    growthTime: 0
-    plantPrefab: {fileID: 0}
-    needWatered: 0
-    plantSellPrice: 0
-    FillHunger: 0
-    FillHealthPoint: 0
-    damagePoint: 0
-    defencePoint: 2
-    skillType: 0
-    StatusEffect: 0
-    StatusEffectDuration: 0
-  - varietyName: 
-    growthTime: 0
-    plantPrefab: {fileID: 0}
-    needWatered: 0
-    plantSellPrice: 0
-    FillHunger: 0
-    FillHealthPoint: 0
-    damagePoint: 0
-    defencePoint: 0
-    skillType: 0
-    StatusEffect: 0
-    StatusEffectDuration: 0
-  - varietyName: 
-    growthTime: 0
-    plantPrefab: {fileID: 0}
-    needWatered: 0
-    plantSellPrice: 0
-    FillHunger: 0
-    FillHealthPoint: 0
-    damagePoint: 0
-    defencePoint: 0
-    skillType: 0
-    StatusEffect: 0
-    StatusEffectDuration: 0
-  - varietyName: 
-    growthTime: 0
-    plantPrefab: {fileID: 0}
-    needWatered: 0
-    plantSellPrice: 0
-    FillHunger: 0
-    FillHealthPoint: 0
-    damagePoint: 0
-    defencePoint: 0
-    skillType: 0
-    StatusEffect: 0
-    StatusEffectDuration: 0
-  - varietyName: 
-    growthTime: 0
-    plantPrefab: {fileID: 0}
-    needWatered: 0
-    plantSellPrice: 0
-    FillHunger: 0
-    FillHealthPoint: 0
-    damagePoint: 0
-    defencePoint: 0
-    skillType: 0
-    StatusEffect: 0
-    StatusEffectDuration: 0
-  - varietyName: 
-    growthTime: 0
-    plantPrefab: {fileID: 0}
-    needWatered: 0
-    plantSellPrice: 0
-    FillHunger: 0
-    FillHealthPoint: 0
-    damagePoint: 0
-    defencePoint: 0
-    skillType: 0
-    StatusEffect: 0
-    StatusEffectDuration: 0
 --- !u!114 &451340557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7381,7 +7295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grownPlantPrefab: {fileID: 4168103307974884793, guid: 54d5d3bcaa040404db6c6361e88246ba, type: 3}
   plantBed: {fileID: 1070989348}
-  plantType: {fileID: 0}
+  plantGrowth: {fileID: 0}
   wateringAmount: 0.1
   plantLayer:
     serializedVersion: 2
@@ -8165,10 +8079,7 @@ MonoBehaviour:
   hungerSlider: {fileID: 0}
   healthText: {fileID: 0}
   hungerText: {fileID: 0}
-  hungerRate: 0.2
   maxHealth: 100
-  invulnerabilityDuration: 2
-  plantType: {fileID: 0}
 --- !u!114 &758583453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8181,14 +8092,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa053171c90c7e74d891615104c74784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roboticNPC: {fileID: 0}
   startingMoney: 100
   moneyText: {fileID: 0}
-  availableCurrencyText: {fileID: 0}
-  marketplaceUI: {fileID: 0}
   notificationText: {fileID: 0}
-  openMarketplaceButton: {fileID: 0}
-  itemsForSale: []
-  currentPotStage: 0
 --- !u!114 &758583454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8264,9 +8171,9 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2058268882}
   - {fileID: 1321535893}
   - {fileID: 1995127542}
-  - {fileID: 2058268882}
   - {fileID: 1884048139}
   m_Father: {fileID: 1547137177}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8287,8 +8194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ebdad604b5b32429fe3fba95d04357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPotStage: 1
-  maxPotStages: 3
   plantFarming: {fileID: 0}
   dayText: {fileID: 0}
   timeText: {fileID: 0}
@@ -8975,7 +8880,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.6, y: -9}
+  m_AnchoredPosition: {x: 1.5999985, y: -9}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &959897565
@@ -10252,6 +10157,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1547137177}
   - component: {fileID: 1547137176}
+  - component: {fileID: 1547137180}
+  - component: {fileID: 1547137179}
+  - component: {fileID: 1547137178}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -10271,6 +10179,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6acadec411c88fd4bb1fe22f2428c69e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingMoney: 100
+  moneyText: {fileID: 0}
+  availableCurrencyText: {fileID: 0}
+  marketplaceUI: {fileID: 0}
+  notificationText: {fileID: 0}
+  player: {fileID: 0}
+  roboticNPC: {fileID: 0}
+  economyManager: {fileID: 0}
+  playerInventory: {fileID: 0}
+  maxHunger: 100
+  hungerIncreasePerDay: 10
+  hungerThreshold: 80
+  hpReductionAmount: 10
 --- !u!4 &1547137177
 Transform:
   m_ObjectHideFlags: 0
@@ -10284,10 +10205,61 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7051751970648273352}
   - {fileID: 758583457}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1547137178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547137175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec74c3bb34a51a2478c40ad21b4349ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hungerSlider: {fileID: 0}
+  healthText: {fileID: 1660190486}
+  hungerText: {fileID: 939666659}
+  maxHealth: 100
+--- !u!114 &1547137179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547137175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987ef6ba351aad847a218965f67e86e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grownPlantPrefab: {fileID: 0}
+  plantBed: {fileID: 0}
+  plantGrowth: {fileID: 0}
+  wateringAmount: 0.1
+  plantLayer:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!114 &1547137180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547137175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1ebdad604b5b32429fe3fba95d04357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plantFarming: {fileID: 0}
+  dayText: {fileID: 919820464}
+  timeText: {fileID: 959897565}
+  startingHour: 6
+  startingMinute: 0
 --- !u!1 &1607471443
 GameObject:
   m_ObjectHideFlags: 0
@@ -11543,7 +11515,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -67.19998, y: 48.3}
+  m_AnchoredPosition: {x: -67.19998, y: 61.1}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2058268883
@@ -11877,11 +11849,11 @@ Transform:
   m_GameObject: {fileID: 4185805752212348659}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.24305183, y: 0.014272891, z: 0.021706576}
+  m_LocalPosition: {x: 0, y: -0.045, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1547137177}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7051751970648273353
 MonoBehaviour:
@@ -12041,5 +12013,6 @@ SceneRoots:
   - {fileID: 2112229792}
   - {fileID: 1617118470}
   - {fileID: 1547137177}
+  - {fileID: 7051751970648273352}
   - {fileID: 1254294023}
   - {fileID: 507297111}

@@ -68,7 +68,6 @@ public class RoboticNPC : MonoBehaviour
         if (economyManager.CanBuyItem(itemCost))
         {
             economyManager.BuyItem(itemCost);
-            // Handle successful purchase logic.
         }
         else
         {
@@ -79,7 +78,7 @@ public class RoboticNPC : MonoBehaviour
     public void SellItem(int itemCost)
     {
         economyManager.SellItem(itemCost);
-        // Handle item selling logic.
+      
     }
 
     public void OfferHealService()
@@ -133,10 +132,13 @@ public class RoboticNPC : MonoBehaviour
     {
         Dictionary<string, int> itemPrices = new Dictionary<string, int>
     {
-        { "BeetrootSeed", 20 },
-        { "MagicScroll", 30 },
-        { "Sword", 50 },
-        // Add more items and their prices here
+        { "BeetrootSeed", 10 },
+        { "MushroomSeed", 20 },
+        { "RaspberrySeed", 25 },
+        { "SalmonSeed", 30 },
+        { "BeefSeed", 45 },
+        { "CherrySeed", 50 },
+
     };
 
         if (itemPrices.ContainsKey(item.itemName))

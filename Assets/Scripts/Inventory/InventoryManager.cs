@@ -12,7 +12,9 @@ public class InventoryManager : MonoBehaviour
     private List<ItemData> items; 
     ItemDatabase itemDatabase = new ItemDatabase();
     public Text moneyText; 
-    public ItemDatabase itemDatabaseEco; //Change the variable that relate with money.
+    public ItemDatabase itemDatabaseEco;
+    private List<PlantVariety> plantInventory = new List<PlantVariety>();
+
 
     void Start()
     {
@@ -125,16 +127,37 @@ public class InventoryManager : MonoBehaviour
 
     }
 
-
-    public void AddPlantToInventory(PlantVariety plant)
+    public void AddPlantToInventory(PlantVariety plant, InventoryManager playerInventory)
     {
-        PlantData.Add(plant);
+        playerInventory.AddPlant(plant);
     }
+
+    public void AddPlant(PlantVariety plant)
+    {
+        // Add the plant to your inventory here.
+        // You need to define the data structure for your inventory.
+        // This could be a list, an array, or any other appropriate data structure.
+        // For example, if you're using a List<PlantVariety> for your inventory:
+        plantInventory.Add(plant);
+    }
+
 
     public int CalculateBuyValue(ItemData itemToBuy) //calculate the buy value of the item
     {
-        
-        return 0;
+        string itemName = itemToBuy.itemName;
+
+        // Check if the item exists in the itemPrices dictionary
+        if (itemPrices.ContainsKey(itemName))
+        {
+            int baseValue = itemPrices[itemName];
+            return baseValue;
+        }
+        else
+        {
+            // Handle the case where the item is not found in the dictionary
+            Debug.LogWarning("Item price not found for " + itemName);
+            return 0; // or any default value
+        }
     }
 
     public bool CanBuyItem(ItemData itemToBuy) // check if the player has enough money to buy the item
@@ -156,4 +179,16 @@ public class InventoryManager : MonoBehaviour
             moneyText.text = "Money: $" + money.ToString();
         }
     }
+
+    
+    private Dictionary<string, int> itemPrices = new Dictionary<string, int>
+{
+    { "Beetroot", 25 },
+    { "Mushroom", 35 },
+    { "Raspberry", 50 },
+    { "Salmon", 70 },
+    { "Beef", 85 },
+    { "Cherry", 100 },
+};
+
 }
