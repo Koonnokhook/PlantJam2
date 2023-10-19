@@ -12,7 +12,7 @@ public class PlantVariety
         {
             if (_instance == null)
             {
-                //_instance = new PlantVariety();
+                //instance = new PlantVariety();
             }
             return _instance;
         }
@@ -27,7 +27,7 @@ public class PlantVariety
     public int FillHealthPoint;
     public int damagePoint;
     public int defencePoint;
-    public int plantHP; // New field for plant HP
+    public int plantHP;
     public string skillName;
     public PlantAbility.PlantSkillType skillType;
     public PlantAbility.PlantStatusEffect StatusEffect;
@@ -76,6 +76,7 @@ public static class PlantVarietiesGetter
         return null;
     }
 }
+
 
 [Serializable]
 public class PlantAbility

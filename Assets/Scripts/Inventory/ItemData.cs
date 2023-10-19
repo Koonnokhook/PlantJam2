@@ -10,6 +10,7 @@ public class ItemData : ScriptableObject
     [Header("Only gameplay")]
     public List<ItemActionType> itemActionTypes;
 
+    public Sprite itemIcon { get; internal set; }
 
     public enum ItemType
     {

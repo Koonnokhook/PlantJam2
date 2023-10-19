@@ -151,7 +151,6 @@ public class BattleSystem : MonoBehaviour
 
             InventoryManager.AddPlantToInventory(selectedVariety);
 
-
             // Replace 'plantInPot' with the actual reference to the plant GameObject
             Destroy(plantInPot);
             Debug.Log("Code needed");

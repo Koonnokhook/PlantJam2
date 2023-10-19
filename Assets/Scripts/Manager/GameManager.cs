@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI notificationText;
     public HealthManagingSystem player;
     public RoboticNPC roboticNPC;
+    public EconomyManager economyManager;
     public InventoryManager playerInventory;
 
 
@@ -58,33 +59,28 @@ public class GameManager : MonoBehaviour
     }
 
 
-    bool HandleBuy(ItemData item)
+    void HandleBuy(ItemData item)
     {
-        if (EconomyManager.CanBuyItem(item))
+        int purchaseValue = roboticNPC.GetBuyValue(item);
+
+        if (economyManager.CanBuyItem(purchaseValue)) // Call the method on the instance
         {
-            int purchaseValue = roboticNPC.GetBuyValue(item);
             if (playerInventory.HasEnoughMoney(purchaseValue))
             {
                 playerInventory.RemoveMoney(purchaseValue);
                 playerInventory.AddItem(item);
-                return true;
             }
         }
-
-        return false;
     }
 
-
-    public bool HandleSell(ItemData item)
+    void HandleSell(ItemData item)
     {
         if (playerInventory.CanSellItem(item))
         {
             int sellValue = playerInventory.CalculateSellValue(item);
             playerInventory.RemoveItem(item);
             playerInventory.AddMoney(sellValue);
-            return true;
         }
-        return false;
     }
 
 

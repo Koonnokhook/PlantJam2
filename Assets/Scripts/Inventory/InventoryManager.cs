@@ -23,7 +23,6 @@ public class InventoryManager : MonoBehaviour
             itemDatabase = new ItemDatabase();
         }
 
-        // Example: Adding Beetroot to the inventory
         ItemData waterBucket = itemDatabase.GetItemByName("WaterBucket");
         AddItem(waterBucket);
     }
@@ -110,7 +109,7 @@ public class InventoryManager : MonoBehaviour
 
     public List<ItemData> GetSellableItems()
     {
-        return items;
+        return new List<ItemData>();
     }
 
     public void RemoveItem(ItemData item)
@@ -129,7 +128,7 @@ public class InventoryManager : MonoBehaviour
 
     public void AddPlantToInventory(PlantVariety plant)
     {
-        //add a plant to the inventory
+        PlantData.Add(plant);
     }
 
     public int CalculateBuyValue(ItemData itemToBuy) //calculate the buy value of the item
@@ -143,6 +142,12 @@ public class InventoryManager : MonoBehaviour
         
         return false; 
     }
+
+    public bool HasEnoughMoney(int amount)
+    {
+        return money >= amount;
+    }
+
 
     private void UpdateMoneyText()
     {

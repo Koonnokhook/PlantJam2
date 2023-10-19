@@ -131,7 +131,6 @@ public class RoboticNPC : MonoBehaviour
 
     public int GetBuyValue(ItemData item)
     {
-        // Define a dictionary to store item prices based on their names.
         Dictionary<string, int> itemPrices = new Dictionary<string, int>
     {
         { "BeetrootSeed", 20 },
@@ -140,10 +139,8 @@ public class RoboticNPC : MonoBehaviour
         // Add more items and their prices here
     };
 
-        // Check if the item's name exists in the dictionary.
         if (itemPrices.ContainsKey(item.itemName))
         {
-            // Retrieve and return the price for the item.
             return itemPrices[item.itemName];
         }
         else
