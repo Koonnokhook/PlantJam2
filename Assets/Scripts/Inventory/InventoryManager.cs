@@ -1,30 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using static ItemData;
 
 public class InventoryManager : MonoBehaviour
 {
-    
     public InventorySlot[] inventorySlots;
     public GameObject InventoryItemPrefab;
     private int money;
-    private List<Item> items;
+    private List<ItemData> items; 
     ItemDatabase itemDatabase = new ItemDatabase();
+    public Text moneyText; 
+    public ItemDatabase itemDatabaseEco; //Change the variable that relate with money.
 
-    // Get a specific item
-    ItemData Beetroot;
+    void Start()
+    {
+        items = new List<ItemData>();
 
-    // Get all items
-    List<ItemData> allItems;
+        if (itemDatabase == null)
+        {
+            itemDatabase = new ItemDatabase();
+        }
+
+        // Example: Adding Beetroot to the inventory
+        ItemData waterBucket = itemDatabase.GetItemByName("WaterBucket");
+        AddItem(waterBucket);
+    }
 
     public bool AddItem(ItemData item)
     {
         for (int i = 0; i < inventorySlots.Length; i++)
         {
-
             InventorySlot slot = inventorySlots[i];
-            InventoryItem itemInslot = slot.GetComponentInChildren<InventoryItem>();
-            if (itemInslot != null)
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+
+            if (itemInSlot == null)
             {
                 SpawnNewItem(item, slot);
                 return true;
@@ -34,24 +45,11 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
-    private void Start()
-    {
-        if (itemDatabase == null)
-        {
-            itemDatabase = new ItemDatabase();
-        }
-        Beetroot = itemDatabase.GetItemByName("Beetroot");
-        allItems = new List<ItemData>();
-
-        allItems.Add(Beetroot);
-    }
-
     void SpawnNewItem(ItemData item, InventorySlot slot)
     {
         GameObject newItemGo = Instantiate(InventoryItemPrefab, slot.transform);
         InventoryItem inventoryItem = newItemGo.GetComponent<InventoryItem>();
-        inventoryItem.InitialiseItem(item);
-
+        inventoryItem.InitializeItem(item);
     }
 
     public class Item
@@ -71,58 +69,86 @@ public class InventoryManager : MonoBehaviour
     public void AddMoney(int amount)
     {
         money += amount;
+        UpdateMoneyText();
     }
 
-    public int CalculateSellValue(Item item)
+    public void RemoveMoney(int purchaseValue)
     {
-        // Implement logic to calculate the sell value
-        return 0;
+        if (money >= purchaseValue)
+        {
+            money -= purchaseValue;
+            UpdateMoneyText();
+        }
+        else
+        {
+            Debug.Log("Not enough money to make the purchase.");
+        }
     }
 
+    public int CalculateSellValue(ItemData item)
+    {
+        //the item's price are fixed.
+        if (item.itemName == "Beetroot")
+            return 25;
+        else if (item.itemName == "Mushroom")
+            return 35;
+        else if (item.itemName == "Raspberry")
+            return 50;
+        else if (item.itemName == "Salmon")
+            return 70;
+        else if (item.itemName == "Beef")
+            return 85;
+        else if (item.itemName == "Cherry")
+            return 100;
+        else
+            return 0;
+    }
     public List<ItemData> GetBuyableItems()
     {
-
         return new List<ItemData>();
     }
 
     public List<ItemData> GetSellableItems()
     {
-      
-        return new List<ItemData>();
+        return items;
     }
 
     public void RemoveItem(ItemData item)
     {
-
-        ItemData itemToRemove = items.Find(i => i.id == item.id);
-
-
-        if (itemToRemove != null)
-        {
-
-            items.Remove(itemToRemove);
-        }
+        items.Remove(item);
     }
 
-    public bool CanSellItem(ItemData itemCost)
+    public bool CanSellItem(ItemData item)
     {
-        Debug.Log("Code needed");
-        return false;
-        
+
+        List<ItemData> sellableItems = itemDatabaseEco.GetSellableItems();
+        return sellableItems.Contains(item);
+
     }
+
 
     public void AddPlantToInventory(PlantVariety plant)
     {
-        /*ItemData id;
-        id.name = plant.varietyName;
-        InventoryManager.AddItem(plant);*/
-        Debug.Log("Code needed");
-
-        
+        //add a plant to the inventory
     }
 
-    
-    
+    public int CalculateBuyValue(ItemData itemToBuy) //calculate the buy value of the item
+    {
+        
+        return 0;
+    }
+
+    public bool CanBuyItem(ItemData itemToBuy) // check if the player has enough money to buy the item
+    {
+        
+        return false; 
+    }
+
+    private void UpdateMoneyText()
+    {
+        if (moneyText != null)
+        {
+            moneyText.text = "Money: $" + money.ToString();
+        }
+    }
 }
-
-

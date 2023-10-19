@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public RoboticNPC roboticNPC;
     public InventoryManager playerInventory;
 
+
+
     public int maxHunger = 100;
     public int hungerIncreasePerDay = 10;
     public int hungerThreshold = 80;
@@ -44,8 +46,10 @@ public class GameManager : MonoBehaviour
         npc.SetupDialogue("What would you like to buy or sell");
         npc.AddSellableItems(playerInventory.GetSellableItems());
         npc.AddBuyableItems(playerInventory.GetBuyableItems());
-        /*npc.OnBuy += HandleBuy;
-        npc.OnSell += HandleSell;*/
+        npc.SetBuyCallback(HandleBuy);
+
+        npc.OnBuy += HandleBuy;
+        npc.OnSell += HandleSell;
 
         npc.OfferHealService();
         npc.OfferHungerService();
@@ -53,7 +57,25 @@ public class GameManager : MonoBehaviour
         return;
     }
 
+
     bool HandleBuy(ItemData item)
+    {
+        if (EconomyManager.CanBuyItem(item))
+        {
+            int purchaseValue = roboticNPC.GetBuyValue(item);
+            if (playerInventory.HasEnoughMoney(purchaseValue))
+            {
+                playerInventory.RemoveMoney(purchaseValue);
+                playerInventory.AddItem(item);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    public bool HandleSell(ItemData item)
     {
         if (playerInventory.CanSellItem(item))
         {
@@ -65,15 +87,7 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    void HandleSell(ItemData item)
-    {
-        if (EconomyManager.CanBuyItem(item))
-        {
-            int purchaseValue = roboticNPC.GetBuyValue(item);
-            playerInventory.RemoveMoney(purchaseValue);
-            playerInventory.AddItem(item);
-        }
-    }
+
 
     void HandleHungerAndHP()
     {

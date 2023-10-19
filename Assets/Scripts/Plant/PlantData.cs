@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public class PlantVariety
 {
-   
+
     private static PlantVariety _instance;
     public static PlantVariety Instance
     {
@@ -111,15 +111,15 @@ public class PlantAbility
     public PlantVariety[] plantVarieties;
 
     private PlantAbility()
+    {
+        plantVarieties = new PlantVariety[]
         {
-            plantVarieties = new PlantVariety[]
-            {
             new PlantVariety("Beety", 10f, null, 1, 40, 20, 10, 5, 2,15, "Paralyze", PlantSkillType.Status, PlantStatusEffect.Paralyze, 1),
             new PlantVariety("Musha", 15f, null, 1, 60, 25, 20, 8, 3,20, "BodySlam", PlantSkillType.Damage, PlantStatusEffect.None, 0),
             new PlantVariety("Rusby", 30f, null, 2, 80, 30, 20, 10, 4,30, "None", PlantSkillType.None, PlantStatusEffect.None, 0),
             new PlantVariety("Sally", 35f, null, 0, 150, 60, 30, 6, 5,40, "Poison", PlantSkillType.Status, PlantStatusEffect.Poison, 2),
             new PlantVariety("Nhomoo", 40f, null, 2, 200, 80, 40, 12, 8,50, "Onfired", PlantSkillType.Status, PlantStatusEffect.Onfired, 3),
             new PlantVariety("Bombasti", 45f, null, 2, 300, 40, 35, 10, 6,45, "Damage", PlantSkillType.Damage, PlantStatusEffect.None, 0)
-            };
-        }
+        };
     }
+}

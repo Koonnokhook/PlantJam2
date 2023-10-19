@@ -15,10 +15,19 @@ public class RoboticNPC : MonoBehaviour
     public int hungerPrice = 10;
 
 
+    private List<ItemData> buyableItems = new List<ItemData>();
+    private List<ItemData> sellableItems = new List<ItemData>();
+
+
     private bool isTalking = false;
 
-   /* public event Action<Item> OnBuy;
-    public event Action<Item> OnSell;*/
+    public event Action<ItemData> OnBuy;
+    public event Action<ItemData> OnSell;
+
+    public void SetBuyCallback(Action<ItemData> buyCallback)
+    {
+        OnBuy += buyCallback;
+    }
 
     void Start()
     {
@@ -109,13 +118,42 @@ public class RoboticNPC : MonoBehaviour
 
     public void AddBuyableItems(List<ItemData> items)
     {
-        Debug.Log("Code needed");
+        buyableItems.AddRange(items);
+        Debug.Log("Buyable items added successfully.");
     }
 
     public void AddSellableItems(List<ItemData> items)
     {
-        Debug.Log("Code needed");
-        
+        sellableItems.AddRange(items);
+        Debug.Log("Buyable items added successfully.");
+
     }
+
+    public int GetBuyValue(ItemData item)
+    {
+        // Define a dictionary to store item prices based on their names.
+        Dictionary<string, int> itemPrices = new Dictionary<string, int>
+    {
+        { "BeetrootSeed", 20 },
+        { "MagicScroll", 30 },
+        { "Sword", 50 },
+        // Add more items and their prices here
+    };
+
+        // Check if the item's name exists in the dictionary.
+        if (itemPrices.ContainsKey(item.itemName))
+        {
+            // Retrieve and return the price for the item.
+            return itemPrices[item.itemName];
+        }
+        else
+        {
+            
+            return 0;
+        }
+    }
+
+
+
 
 }

@@ -113,7 +113,7 @@ public class FarmingSystem : MonoBehaviour, Interactive.IInteractable
 
                 return;
             }*/
-            SceneManager.LoadScene("TurnBase"); // Replace "BattleScene" with the actual name of your battle scene.
+            SceneManager.LoadScene("TurnBase");
         }
     }
 }

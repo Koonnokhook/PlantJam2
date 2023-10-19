@@ -149,13 +149,11 @@ public class BattleSystem : MonoBehaviour
         {
             dialogueText.text = "You won the battle!";
 
-            // Replace 'inventory' with your actual inventory management system
-            //InventoryManager.AddPlantToInventory(selectedVariety);
-            Debug.Log("Code needed");
+            InventoryManager.AddPlantToInventory(selectedVariety);
 
 
             // Replace 'plantInPot' with the actual reference to the plant GameObject
-            //Destroy(plantInPot);
+            Destroy(plantInPot);
             Debug.Log("Code needed");
         }
 

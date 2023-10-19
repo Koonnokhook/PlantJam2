@@ -1,26 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
-
-public class ItemData : MonoBehaviour
+[CreateAssetMenu(fileName = "ItemData", menuName = "ScriptableObjects/ItemData", order = 1)]
+public class ItemData : ScriptableObject
 {
+    public string itemName;
+    public ItemType itemType;
 
     [Header("Only gameplay")]
+    public List<ItemActionType> itemActionTypes;
 
-    public string name;
-    public ItemType type;
-
-    public ActionType actionType;
-
-    public Vector2Int range = new Vector2Int(5, 4);
-
-    [Header("Only UI")]
-
-    public bool stackable = true;
-
-    [Header("Both")]
-
-    public Sprite image;
 
     public enum ItemType
     {
@@ -29,13 +18,12 @@ public class ItemData : MonoBehaviour
         Tool
     }
 
-    public enum ActionType
+    public enum ItemActionType
     {
-        plant,
+        Plant,
         Heal,
         Sell,
-        water
+        Water
     }
-}
 
-   
+}
