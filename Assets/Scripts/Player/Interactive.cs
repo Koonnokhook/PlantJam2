@@ -24,6 +24,9 @@ public class Interactive: MonoBehaviour
 
     public void Update() 
     {
+        //วัดระยะห่าง / เช็คชน 
+
+        //ทำความเข้าใจraycast
         if (Input.GetKeyDown(KeyCode.E))
         {
             Ray ray = new Ray(InteractorSource.position, InteractorSource.forward);

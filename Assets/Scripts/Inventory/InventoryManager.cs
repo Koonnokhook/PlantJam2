@@ -2,31 +2,84 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static ItemData;
+using static UnityEditor.Progress;
 
 public class InventoryManager : MonoBehaviour
 {
     public InventorySlot[] inventorySlots;
-    public GameObject InventoryItemPrefab;
-    private int money;
-    private List<ItemData> items; 
-    ItemDatabase itemDatabase = new ItemDatabase();
-    public Text moneyText; 
-    public ItemDatabase itemDatabaseEco;
-    private List<PlantVariety> plantInventory = new List<PlantVariety>();
+    public GameObject inventoryItemPrefab;
+    public Text moneyText;
 
+    private int money;
+    private List<ItemData> items = new List<ItemData>();
+    private List<PlantVariety> plantInventory = new List<PlantVariety>();
+    ItemDatabase itemDatabase = new ItemDatabase();
+
+    private ItemDatabase itemDatabaseEco;
+
+
+
+    private Dictionary<string, int> itemPrices = new Dictionary<string, int>
+    {
+        { "Beetroot", 25 },
+        { "Mushroom", 35 },
+        { "Raspberry", 50 },
+        { "Salmon", 70 },
+        { "Beef", 85 },
+        { "Cherry", 100 },
+    };
 
     void Start()
     {
-        items = new List<ItemData>();
+        itemDatabase = new ItemDatabase();
 
-        if (itemDatabase == null)
-        {
-            itemDatabase = new ItemDatabase();
-        }
-
+        // Example: Adding a WaterBucket item to the inventory on startup
         ItemData waterBucket = itemDatabase.GetItemByName("WaterBucket");
         AddItem(waterBucket);
+    }
+
+    public bool HasItem(GameObject itemPrefab)
+    {
+        // Check if the itemPrefab exists in the player's inventory
+        foreach (InventorySlot slot in inventorySlots)
+        {
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot != null && itemInSlot.itemPrefab == itemPrefab)
+            {
+                // The item is found in the inventory
+                return true;
+            }
+        }
+
+        // The item is not found in the inventory
+        return false;
+    }
+
+
+    public bool CanSellItem(ItemData item)
+    {
+        //code needed
+    }
+    public void AddPlantToInventory(PlantVariety plant)
+    {
+
+        List<ItemData> sellableItems = itemDatabaseEco.GetSellableItems();
+        return sellableItems.Contains(item);
+
+    }
+
+    public void AddPlantToInventory(PlantVariety plant, InventoryManager playerInventory)
+    {
+        playerInventory.AddPlant(plant);
+    }
+
+    public void AddPlant(PlantVariety plant)
+    {
+        // Add the plant to your inventory here.
+        // You need to define the data structure for your inventory.
+        // This could be a list, an array, or any other appropriate data structure.
+        // For example, if you're using a List<PlantVariety> for your inventory:
+        plantInventory.Add(plant);
     }
 
     public bool AddItem(ItemData item)
@@ -48,23 +101,9 @@ public class InventoryManager : MonoBehaviour
 
     void SpawnNewItem(ItemData item, InventorySlot slot)
     {
-        GameObject newItemGo = Instantiate(InventoryItemPrefab, slot.transform);
+        GameObject newItemGo = Instantiate(inventoryItemPrefab, slot.transform);
         InventoryItem inventoryItem = newItemGo.GetComponent<InventoryItem>();
         inventoryItem.InitializeItem(item);
-    }
-
-    public class Item
-    {
-        public string Name { get; set; }
-        public int Cost { get; set; }
-        public bool IsEssential { get; set; }
-
-        public Item(string name, int cost, bool isEssential)
-        {
-            Name = name;
-            Cost = cost;
-            IsEssential = isEssential;
-        }
     }
 
     public void AddMoney(int amount)
@@ -88,7 +127,6 @@ public class InventoryManager : MonoBehaviour
 
     public int CalculateSellValue(ItemData item)
     {
-        //the item's price are fixed.
         if (item.itemName == "Beetroot")
             return 25;
         else if (item.itemName == "Mushroom")
@@ -104,6 +142,7 @@ public class InventoryManager : MonoBehaviour
         else
             return 0;
     }
+
     public List<ItemData> GetBuyableItems()
     {
         return new List<ItemData>();
@@ -119,34 +158,15 @@ public class InventoryManager : MonoBehaviour
         items.Remove(item);
     }
 
-    public bool CanSellItem(ItemData item)
+    public void AddPlantToInventory(PlantVariety plant)
     {
-
-        List<ItemData> sellableItems = itemDatabaseEco.GetSellableItems();
-        return sellableItems.Contains(item);
-
-    }
-
-    public void AddPlantToInventory(PlantVariety plant, InventoryManager playerInventory)
-    {
-        playerInventory.AddPlant(plant);
-    }
-
-    public void AddPlant(PlantVariety plant)
-    {
-        // Add the plant to your inventory here.
-        // You need to define the data structure for your inventory.
-        // This could be a list, an array, or any other appropriate data structure.
-        // For example, if you're using a List<PlantVariety> for your inventory:
         plantInventory.Add(plant);
     }
 
-
-    public int CalculateBuyValue(ItemData itemToBuy) //calculate the buy value of the item
+    public int CalculateBuyValue(ItemData itemToBuy)
     {
         string itemName = itemToBuy.itemName;
 
-        // Check if the item exists in the itemPrices dictionary
         if (itemPrices.ContainsKey(itemName))
         {
             int baseValue = itemPrices[itemName];
@@ -154,23 +174,20 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            // Handle the case where the item is not found in the dictionary
             Debug.LogWarning("Item price not found for " + itemName);
-            return 0; // or any default value
+            return 0;
         }
     }
 
-    public bool CanBuyItem(ItemData itemToBuy) // check if the player has enough money to buy the item
+    public bool CanBuyItem(ItemData itemToBuy)
     {
-        
-        return false; 
+        return HasEnoughMoney(CalculateBuyValue(itemToBuy));
     }
 
     public bool HasEnoughMoney(int amount)
     {
         return money >= amount;
     }
-
 
     private void UpdateMoneyText()
     {
@@ -179,16 +196,4 @@ public class InventoryManager : MonoBehaviour
             moneyText.text = "Money: $" + money.ToString();
         }
     }
-
-    
-    private Dictionary<string, int> itemPrices = new Dictionary<string, int>
-{
-    { "Beetroot", 25 },
-    { "Mushroom", 35 },
-    { "Raspberry", 50 },
-    { "Salmon", 70 },
-    { "Beef", 85 },
-    { "Cherry", 100 },
-};
-
 }
