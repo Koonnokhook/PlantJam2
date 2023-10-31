@@ -1,4 +1,5 @@
-# PlantJam2 took part in the Thailand Horror Jam, but it wasn't completed on time.
+# PlantJam2
+participate in Thailand Horror Jam but It didn't finished in time.
 
 This is my first game jam, and I did all of this in 2-3 day-ish? I did not submit my game on time because I overscoped it.
 
