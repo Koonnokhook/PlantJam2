@@ -11,13 +11,8 @@ public class InventoryManager : MonoBehaviour
     public Text moneyText;
 
     private int money;
-    private List<ItemData> items = new List<ItemData>();
     private List<PlantVariety> plantInventory = new List<PlantVariety>();
-    ItemDatabase itemDatabase = new ItemDatabase();
-
     private ItemDatabase itemDatabaseEco;
-
-
 
     private Dictionary<string, int> itemPrices = new Dictionary<string, int>
     {
@@ -31,56 +26,56 @@ public class InventoryManager : MonoBehaviour
 
     void Start()
     {
-        itemDatabase = new ItemDatabase();
-
+        itemDatabaseEco = new ItemDatabase(); // Fix: Initialize itemDatabaseEco
         // Example: Adding a WaterBucket item to the inventory on startup
-        ItemData waterBucket = itemDatabase.GetItemByName("WaterBucket");
+        ItemData waterBucket = itemDatabaseEco.GetItemByName("WaterBucket");
         AddItem(waterBucket);
     }
-
+    /*
     public bool HasItem(GameObject itemPrefab)
     {
-        // Check if the itemPrefab exists in the player's inventory
         foreach (InventorySlot slot in inventorySlots)
         {
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
             if (itemInSlot != null && itemInSlot.itemPrefab == itemPrefab)
             {
-                // The item is found in the inventory
                 return true;
             }
         }
+        return false;
+    }
+    
+     */
 
-        // The item is not found in the inventory
+    public bool CanSellItem(ItemData item)
+    {
+        // Provide the actual implementation for this method based on your logic
         return false;
     }
 
 
-    public bool CanSellItem(ItemData item)
-    {
-        //code needed
-    }
+    /*
     public void AddPlantToInventory(PlantVariety plant)
     {
-
         List<ItemData> sellableItems = itemDatabaseEco.GetSellableItems();
-        return sellableItems.Contains(item);
-
+        // Fix: Define the 'item' variable before using it
+        ItemData item = sellableItems.Find(i => i.itemName == plant.itemName);
+        if (item != null)
+        {
+            plantInventory.Add(plant);
+        }
     }
 
     public void AddPlantToInventory(PlantVariety plant, InventoryManager playerInventory)
     {
-        playerInventory.AddPlant(plant);
+        playerInventory.AddPlantToInventory(plant);
     }
-
+    */
     public void AddPlant(PlantVariety plant)
     {
-        // Add the plant to your inventory here.
-        // You need to define the data structure for your inventory.
-        // This could be a list, an array, or any other appropriate data structure.
-        // For example, if you're using a List<PlantVariety> for your inventory:
         plantInventory.Add(plant);
     }
+
 
     public bool AddItem(ItemData item)
     {
@@ -152,12 +147,12 @@ public class InventoryManager : MonoBehaviour
     {
         return new List<ItemData>();
     }
-
+    /*
     public void RemoveItem(ItemData item)
     {
         items.Remove(item);
     }
-
+    */
     public void AddPlantToInventory(PlantVariety plant)
     {
         plantInventory.Add(plant);
